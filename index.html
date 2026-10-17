@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>区块链生态社区业务</title>
+<style>
+  :root{
+    --bg-stage:#0A0603;            /* 桌面舞台底色 */
+    --bg-screen:#140C04;           /* 屏幕底色 深棕黑 */
+    --gold:#FFB020;                /* 主金 */
+    --gold-deep:#D97706;           /* 深黄 */
+    --orange:#F97316;              /* 橙 */
+    --green:#10B981;               /* 翠绿点缀 */
+    --green-deep:#065F46;          /* 深绿 */
+    --ink:#FDF3E3;                 /* 米白文字 */
+    --ink-dim:#B99B6B;             /* 暗金文字 */
+    --radius:16px;
+    --mono:"SF Mono","Cascadia Mono",Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","HarmonyOS Sans SC",sans-serif;
+    background:var(--bg-stage);
+    display:flex;align-items:center;justify-content:center;
+    min-height:100vh;padding:24px 12px;overflow:hidden;position:relative;
+  }
+  /* ===== 舞台背景光晕 ===== */
+  body::before,body::after{
+    content:"";position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;
+  }
+  body::before{width:560px;height:560px;background:rgba(217,119,6,.14);top:-160px;left:-120px;animation:breath 9s ease-in-out infinite}
+  body::after{width:520px;height:520px;background:rgba(6,95,70,.16);bottom:-160px;right:-100px;animation:breath 11s ease-in-out infinite reverse}
+  @keyframes breath{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
+
+  /* ================= 手机机身 ================= */
+  .phone{
+    position:relative;width:392px;height:min(846px,94vh);flex:none;
+    border-radius:54px;padding:12px;
+    background:linear-gradient(145deg,#3A332C 0%,#14100B 22%,#241D14 50%,#0C0906 78%,#39312A 100%);
+    box-shadow:
+      0 60px 120px rgba(0,0,0,.75),
+      0 24px 48px rgba(0,0,0,.6),
+      inset 0 1px 1px rgba(255,214,140,.28),
+      inset 0 -1px 1px rgba(255,214,140,.12);
+    animation:phoneIn .9s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes phoneIn{from{opacity:0;transform:translateY(34px) scale(.97)}to{opacity:1;transform:none}}
+  /* 侧键 */
+  .key{position:absolute;background:linear-gradient(90deg,#2A231B,#4A4034,#2A231B);border-radius:3px;box-shadow:inset 0 1px 0 rgba(255,220,160,.25)}
+  .key.power{right:-3px;top:216px;width:3px;height:88px}
+  .key.vol-up{left:-3px;top:190px;width:3px;height:56px}
+  .key.vol-dn{left:-3px;top:256px;width:3px;height:56px}
+  /* 屏幕 */
+  .screen{
+    position:relative;width:100%;height:100%;
+    border-radius:43px;overflow:hidden;
+    background:
+      radial-gradient(140% 60% at 50% -8%,rgba(249,115,22,.22) 0%,transparent 55%),
+      radial-gradient(120% 46% at 50% 108%,rgba(16,185,129,.13) 0%,transparent 60%),
+      var(--bg-screen);
+    display:flex;flex-direction:column;
+  }
+  /* 蜂窝六边形链纹理 */
+  .screen::before{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='97' viewBox='0 0 56 97'%3E%3Cpath d='M28 2 52 16v26L28 56 4 42V16Z M28 56 52 70v26L28 110 4 96V70Z' fill='none' stroke='%23FFB020' stroke-width='1'/%3E%3C/svg%3E");
+    background-size:56px 97px;
+  }
+  /* 底部开孔 */
+  .port{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:96px;height:4px;border-radius:99px;background:#060503;box-shadow:inset 0 1px 2px rgba(0,0,0,.9),0 1px 0 rgba(255,220,160,.08)}
+  .hole{position:absolute;bottom:6px;width:7px;height:7px;border-radius:50%;background:#060503;box-shadow:inset 0 1px 2px rgba(0,0,0,.9)}
+  .hole.l{left:calc(50% - 74px)} .hole.r{right:calc(50% - 74px)}
+
+  /* ================= 状态栏（sticky） ================= */
+  .statusbar{
+    position:relative;z-index:30;flex:none;
+    padding:16px 30px 8px;
+    background:linear-gradient(180deg,rgba(20,12,4,.92),rgba(20,12,4,.55) 70%,transparent);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  }
+  .statusbar .row{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ink);letter-spacing:.5px}
+  .sicons{display:flex;align-items:center;gap:6px;color:var(--gold)}
+  .sicons svg{display:block}
+  /* 灵动岛 */
+  .island{
+    position:absolute;top:12px;left:50%;transform:translateX(-50%);
+    width:118px;height:32px;border-radius:20px;background:#020202;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.05),0 4px 14px rgba(0,0,0,.6);
+  }
+  .island::after{content:"";position:absolute;right:11px;top:50%;transform:translateY(-50%);width:9px;height:9px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%,#1E2C46 0%,#060B16 60%);box-shadow:inset 0 0 2px rgba(90,140,255,.5)}
+
+  /* ================= 页面滚动区 ================= */
+  .page{
+    flex:1;overflow-y:auto;overscroll-behavior:contain;position:relative;z-index:5;
+    padding:10px 28px 30px;
+  }
+  .page::-webkit-scrollbar{width:6px}
+  .page::-webkit-scrollbar-track{background:rgba(255,176,32,.05)}
+  .page::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#FFB020,#B45309);border-radius:99px;box-shadow:0 0 6px rgba(255,176,32,.55)}
+  .page::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#FFC95A,#D97706)}
+
+  /* ================= Hero ================= */
+  .hero{padding-top:14px;text-align:center;animation:riseIn .8s .15s cubic-bezier(.22,1,.36,1) both;position:relative}
+  /* 背景大六边形线框 */
+  .hero .hexbg{
+    position:absolute;top:-30px;left:50%;transform:translateX(-50%);
+    width:300px;height:300px;pointer-events:none;opacity:.07;
+    animation:spinSlow 40s linear infinite;
+  }
+  @keyframes spinSlow{to{transform:translateX(-50%) rotate(360deg)}}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:3.5px;color:var(--gold);
+    padding:6px 14px;border:1px solid rgba(255,176,32,.35);border-radius:99px;
+    background:rgba(255,176,32,.06);box-shadow:0 0 14px rgba(255,176,32,.12);
+  }
+  .eyebrow i{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 2.2s infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+  h1{
+    margin-top:16px;font-size:33px;line-height:1.22;font-weight:800;letter-spacing:2px;
+    background:linear-gradient(180deg,#FFE7B8 0%,#FFB020 46%,#D97706 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 18px rgba(255,176,32,.35));
+  }
+  .sub{margin-top:12px;font-size:13px;color:var(--ink-dim);letter-spacing:2.5px}
+  .sub b{color:var(--green);font-weight:600}
+  .tags{margin-top:16px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+  .tag{
+    font-size:10.5px;color:var(--ink-dim);letter-spacing:1px;padding:5px 11px;border-radius:8px;
+    border:1px solid rgba(185,155,107,.28);background:rgba(185,155,107,.07);
+  }
+  .tag.hot{color:#FFC95A;border-color:rgba(255,176,32,.4);background:rgba(255,176,32,.09)}
+  .tag.ok{color:#34D399;border-color:rgba(16,185,129,.4);background:rgba(16,185,129,.08)}
+
+  /* ================= 业务网格 ================= */
+  .grid-title{
+    margin:30px 0 14px;display:flex;align-items:center;gap:10px;
+    font-size:12px;letter-spacing:2.5px;color:var(--ink-dim);
+    animation:riseIn .8s .35s cubic-bezier(.22,1,.36,1) both;
+  }
+  .grid-title::before,.grid-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,176,32,.35))}
+  .grid-title::after{background:linear-gradient(90deg,rgba(255,176,32,.35),transparent)}
+  .grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  }
+  .card{
+    position:relative;overflow:hidden;cursor:pointer;user-select:none;
+    padding:16px 14px 14px;border-radius:var(--radius);
+    background:linear-gradient(160deg,rgba(255,176,32,.09),rgba(20,12,4,.4) 55%);
+    border:1px solid rgba(255,176,32,.28);
+    box-shadow:inset 0 1px 0 rgba(255,220,160,.12),0 8px 20px rgba(0,0,0,.35);
+    transition:transform .22s cubic-bezier(.22,1,.36,1),box-shadow .25s,border-color .25s;
+    animation:riseIn .7s cubic-bezier(.22,1,.36,1) both;
+  }
+  .card:nth-child(1){animation-delay:.42s}.card:nth-child(2){animation-delay:.5s}
+  .card:nth-child(3){animation-delay:.58s}.card:nth-child(4){animation-delay:.66s}
+  .card:nth-child(5){animation-delay:.74s}.card:nth-child(6){animation-delay:.82s}
+  @keyframes riseIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  .card:active{transform:scale(.965)}
+  .card:hover{border-color:rgba(255,176,32,.6);box-shadow:0 0 0 1px rgba(255,176,32,.25),0 10px 26px rgba(217,119,6,.22),inset 0 1px 0 rgba(255,220,160,.16);transform:translateY(-3px)}
+  /* 深绿系卡片 */
+  .card.green{background:linear-gradient(160deg,rgba(16,185,129,.09),rgba(6,32,24,.4) 55%);border-color:rgba(16,185,129,.3)}
+  .card.green:hover{border-color:rgba(16,185,129,.62);box-shadow:0 0 0 1px rgba(16,185,129,.25),0 10px 26px rgba(6,95,70,.3),inset 0 1px 0 rgba(160,255,220,.12)}
+  /* 点击脉冲光 */
+  .card .pulse{position:absolute;inset:0;background:radial-gradient(120px circle at var(--px,50%) var(--py,50%),rgba(255,196,86,.28),transparent 70%);opacity:0;pointer-events:none;transition:opacity .5s}
+  .card.flash .pulse{opacity:1;transition:opacity .06s}
+  /* 涟漪 */
+  .ripple{position:absolute;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,200,90,.5) 0%,rgba(255,200,90,0) 70%);transform:scale(0);animation:rip .6s ease-out forwards}
+  .card.green .ripple{background:radial-gradient(circle,rgba(52,211,153,.5) 0%,rgba(52,211,153,0) 70%)}
+  @keyframes rip{to{transform:scale(2.6);opacity:0}}
+
+  .card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+  .icon-ring{
+    width:44px;height:44px;border-radius:13px;flex:none;
+    display:flex;align-items:center;justify-content:center;color:var(--gold);
+    background:linear-gradient(150deg,rgba(255,176,32,.2),rgba(217,119,6,.08));
+    border:1px solid rgba(255,176,32,.4);
+    box-shadow:0 0 12px rgba(255,176,32,.2),inset 0 0 8px rgba(255,176,32,.1);
+    animation:floaty 4.2s ease-in-out infinite;
+  }
+  .card.green .icon-ring{color:#34D399;background:linear-gradient(150deg,rgba(16,185,129,.2),rgba(6,95,70,.12));border-color:rgba(16,185,129,.45);box-shadow:0 0 12px rgba(16,185,129,.22),inset 0 0 8px rgba(16,185,129,.1)}
+  .card:nth-child(odd) .icon-ring{animation-delay:.6s}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+  .no{font-family:var(--mono);font-size:20px;font-weight:700;color:rgba(255,176,32,.22);letter-spacing:1px}
+  .card.green .no{color:rgba(52,211,153,.25)}
+  .card h3{font-size:15.5px;font-weight:700;color:var(--ink);letter-spacing:.8px;margin-bottom:6px}
+  .card p{font-size:11px;line-height:1.55;color:var(--ink-dim);letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .card .bar{margin-top:11px;height:3px;border-radius:99px;background:rgba(255,176,32,.14);overflow:hidden}
+  .card.green .bar{background:rgba(16,185,129,.14)}
+  .card .bar i{display:block;height:100%;width:36%;border-radius:99px;background:linear-gradient(90deg,var(--gold-deep),var(--gold));box-shadow:0 0 6px rgba(255,176,32,.7)}
+  .card.green .bar i{background:linear-gradient(90deg,var(--green-deep),var(--green));box-shadow:0 0 6px rgba(16,185,129,.7)}
+
+  /* ================= CTA ================= */
+  .cta{margin:26px 2px 0;animation:riseIn .8s .9s cubic-bezier(.22,1,.36,1) both}
+  .cta button{
+    width:100%;padding:15px;border:none;border-radius:999px;cursor:pointer;
+    font-family:inherit;font-size:15px;font-weight:700;letter-spacing:3px;color:#1A0E02;
+    background:linear-gradient(135deg,#FFC95A 0%,#F97316 55%,#D97706 100%);
+    box-shadow:0 0 8px rgba(255,176,32,.55),0 0 22px rgba(249,115,22,.3),inset 0 1px 0 rgba(255,255,255,.45);
+    transition:transform .2s,box-shadow .25s;
+  }
+  .cta button:hover{box-shadow:0 0 12px rgba(255,176,32,.8),0 0 34px rgba(249,115,22,.42),inset 0 1px 0 rgba(255,255,255,.5);transform:translateY(-2px)}
+  .cta button:active{transform:scale(.97)}
+  footer{margin-top:18px;text-align:center;font-size:10px;letter-spacing:2px;color:rgba(185,155,107,.5);font-family:var(--mono)}
+
+  /* toast 提示 */
+  .toast{
+    position:absolute;left:50%;bottom:34px;transform:translateX(-50%) translateY(16px);
+    padding:10px 22px;border-radius:99px;font-size:12.5px;letter-spacing:1px;color:#FFE7B8;
+    background:rgba(28,18,6,.9);border:1px solid rgba(255,176,32,.5);
+    box-shadow:0 0 18px rgba(255,176,32,.35),0 12px 30px rgba(0,0,0,.5);
+    backdrop-filter:blur(10px);opacity:0;pointer-events:none;z-index:60;
+    transition:opacity .3s,transform .3s cubic-bezier(.22,1,.36,1);white-space:nowrap;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ================= 移动端：全屏显示 ================= */
+  @media (max-width:480px){
+    body{padding:0}
+    .phone{width:100vw;height:100vh;height:100dvh;border-radius:0;padding:0;box-shadow:none;animation:none}
+    .key,.port,.hole{display:none}
+    .screen{border-radius:0}
+    .island{display:none}
+    .statusbar{padding-top:calc(env(safe-area-inset-top,0px) + 12px)}
+  }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <span class="key power"></span><span class="key vol-up"></span><span class="key vol-dn"></span>
+  <div class="screen">
+    <div class="island"></div>
+
+    <!-- 状态栏 -->
+    <div class="statusbar">
+      <div class="row">
+        <span id="clock">--:--</span>
+        <div class="sicons">
+          <!-- 信号 -->
+          <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+          <!-- WiFi -->
+          <svg width="15" height="11" viewBox="0 0 15 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 3.6a10 10 0 0 1 13 0"/><path d="M3.4 6.2a6.6 6.6 0 0 1 8.2 0"/><path d="M5.8 8.8a3.2 3.2 0 0 1 3.4 0"/></svg>
+          <!-- 电池 -->
+          <svg width="24" height="12" viewBox="0 0 24 12"><rect x=".5" y=".5" width="20" height="11" rx="3.2" fill="none" stroke="currentColor" opacity=".5"/><rect x="2" y="2" width="14" height="8" rx="1.8" fill="currentColor"/><path d="M22 4v4a2.2 2.2 0 0 0 0-4Z" fill="currentColor" opacity=".5"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- 可上下滑动内容区 -->
+    <div class="page">
+
+      <!-- Hero 主标题 -->
+      <header class="hero">
+        <svg class="hexbg" viewBox="0 0 100 100" fill="none" stroke="#FFB020" stroke-width=".5">
+          <path d="M50 4 90 27v46L50 96 10 73V27Z"/>
+          <path d="M50 18 78 34v32L50 82 22 66V34Z"/>
+          <path d="M50 32 66 41v18l-16 9-16-9V41Z"/>
+        </svg>
+        <span class="eyebrow"><i></i>CHAIN · ECOSYSTEM</span>
+        <h1>区块链生态<br>社区业务</h1>
+        <p class="sub">一条链 · 六大业务 · <b>共建共赢</b></p>
+        <div class="tags">
+          <span class="tag hot">主网运行中</span>
+          <span class="tag ok">节点招募开放</span>
+          <span class="tag">社区自治</span>
+        </div>
+      </header>
+
+      <!-- 业务网格 -->
+      <div class="grid-title">核心业务版图</div>
+      <main class="grid" id="grid">
+
+        <div class="card" data-note="523.25" data-msg="AI代码开发 · 业务通道已开启">
+          <span class="pulse"></span>
+          <div class="card-top">
+            <div class="icon-ring">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5"/><path d="m16 7 5 5-5 5"/><path d="m13.5 4-3 16"/></svg>
+            </div>
+            <span class="no">01</span>
+          </div>
+          <h3>AI代码开发</h3>
+          <p>智能合约 · DApp 定制开发</p>
+          <div class="bar"><i style="width:46%"></i></div>
+        </div>
+
+        <div class="card" data-note="587.33" data-msg="AI动漫开发 · 业务通道已开启">
+          <span class="pulse"></span>
+          <div class="card-top">
+            <div class="icon-ring">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3.2"/></svg>
+            </div>
+            <span class="no">02</span>
+          </div>
+          <h3>AI动漫开发</h3>
+          <p>AI 驱动动漫内容生产</p>
+          <div class="bar"><i style="width:52%"></i></div>
+        </div>
+
+        <div class="card" data-note="659.25" data-msg="加密货币代购 · 代买代售服务">
+          <span class="pulse"></span>
+          <div class="card-top">
+            <div class="icon-ring">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 7.5h4a2 2 0 0 1 0 4h-4zM9.5 11.5h4.6a2 2 0 0 1 0 4H9.5zM10.5 6v1.5M10.5 15.5V17M13 6v1.5M13 15.5V17"/></svg>
+            </div>
+            <span class="no">03</span>
+          </div>
+          <h3>加密货币代购</h3>
+          <p>代买代售 · 一站式服务</p>
+          <div class="bar"><i style="width:64%"></i></div>
+        </div>
+
+        <div class="card" data-note="698.46" data-msg="其他基础操作 · 服务已就绪">
+          <span class="pulse"></span>
+          <div class="card-top">
+            <div class="icon-ring">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H5a2 2 0 0 1 0-4h13v4"/><path d="M4 5v13a2 2 0 0 0 2 2h14V7"/><path d="M15 13h2"/></svg>
+            </div>
+            <span class="no">04</span>
+          </div>
+          <h3>其他基础操作</h3>
+          <p>钱包 · 转账 · 链上操作</p>
+          <div class="bar"><i style="width:58%"></i></div>
+        </div>
+
+        <div class="card green" data-note="783.99" data-msg="节点搭建 · 部署通道已开启">
+          <span class="pulse"></span>
+          <div class="card-top">
+            <div class="icon-ring">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 21 7v10l-9 5-9-5V7Z"/><circle cx="12" cy="12" r="2.6"/><path d="M12 2v7.4M12 14.6V22M3 7l6.5 3.5M14.5 13.5 21 17M21 7l-6.5 3.5M9.5 13.5 3 17"/></svg>
+            </div>
+            <span class="no">05</span>
+          </div>
+          <h3>节点搭建</h3>
+          <p>主网节点部署与运维</p>
+          <div class="bar"><i style="width:72%"></i></div>
+        </div>
+
+        <div class="card green" data-note="880" data-msg="生态宣发 · 推广通道已开启">
+          <span class="pulse"></span>
+          <div class="card-top">
+            <div class="icon-ring">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4a1 1 0 0 0 1 1h3l6 4V5L7 9H4a1 1 0 0 0-1 1Z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+            </div>
+            <span class="no">06</span>
+          </div>
+          <h3>生态宣发</h3>
+          <p>社区推广 · 品牌传播</p>
+          <div class="bar"><i style="width:80%"></i></div>
+        </div>
+
+      </main>
+
+      <!-- CTA -->
+      <div class="cta">
+        <button id="joinBtn">加入生态 · 立即咨询</button>
+        <footer>© 2026 CHAIN·ECO 生态社区 — DECENTRALIZED &amp; SHARED</footer>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+    <div class="port"></div><span class="hole l"></span><span class="hole r"></span>
+  </div>
+</div>
+
+<script>
+  /* ===== 状态栏真实时间 ===== */
+  const clock = document.getElementById('clock');
+  function tick(){
+    const d = new Date();
+    clock.textContent = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+  }
+  tick(); setInterval(tick, 15000);
+
+  /* ===== 音效：每张卡片独立音高（五声音阶） ===== */
+  let actx = null;
+  function playNote(freq){
+    try{
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type = 'sine'; o.frequency.value = freq;
+      g.gain.setValueAtTime(.0001, actx.currentTime);
+      g.gain.exponentialRampToValueAtTime(.18, actx.currentTime + .02);
+      g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime + .5);
+      o.connect(g).connect(actx.destination);
+      o.start(); o.stop(actx.currentTime + .55);
+      /* 高八度泛音，音色更亮 */
+      const o2 = actx.createOscillator(), g2 = actx.createGain();
+      o2.type = 'triangle'; o2.frequency.value = freq * 2;
+      g2.gain.setValueAtTime(.0001, actx.currentTime);
+      g2.gain.exponentialRampToValueAtTime(.06, actx.currentTime + .02);
+      g2.gain.exponentialRampToValueAtTime(.0001, actx.currentTime + .35);
+      o2.connect(g2).connect(actx.destination);
+      o2.start(); o2.stop(actx.currentTime + .4);
+    }catch(e){}
+  }
+
+  const toast = document.getElementById('toast');
+  let toastTimer = null;
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>toast.classList.remove('show'), 1800);
+  }
+
+  /* ===== 卡片交互：涟漪 + 脉冲 + 音效 + 提示 ===== */
+  document.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('pointerdown', e=>{
+      const r = card.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      card.style.setProperty('--px', x + 'px');
+      card.style.setProperty('--py', y + 'px');
+      card.classList.add('flash');
+      /* 涟漪 */
+      const rip = document.createElement('span');
+      rip.className = 'ripple';
+      rip.style.left = (x - 40) + 'px';
+      rip.style.top  = (y - 40) + 'px';
+      rip.style.width = rip.style.height = '80px';
+      card.appendChild(rip);
+      setTimeout(()=>rip.remove(), 620);
+      playNote(parseFloat(card.dataset.note));
+    });
+    card.addEventListener('pointerup', ()=>card.classList.remove('flash'));
+    card.addEventListener('pointerleave', ()=>card.classList.remove('flash'));
+    card.addEventListener('click', ()=>showToast(card.dataset.msg));
+  });
+
+  /* ===== CTA 按钮 ===== */
+  document.getElementById('joinBtn').addEventListener('click', ()=>{
+    playNote(1046.5);
+    showToast('已收到申请 · 社区管家将尽快联系你');
+  });
+</script>
+</body>
+</html>
