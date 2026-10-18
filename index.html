@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>区块链生态社区业务</title>
+<title>区块链生态业务</title>
 <style>
   :root{
     --bg-stage:#0A0603;            /* 桌面舞台底色 */
@@ -73,16 +73,6 @@
   .hole{position:absolute;bottom:6px;width:7px;height:7px;border-radius:50%;background:#060503;box-shadow:inset 0 1px 2px rgba(0,0,0,.9)}
   .hole.l{left:calc(50% - 74px)} .hole.r{right:calc(50% - 74px)}
 
-  /* ================= 状态栏（sticky） ================= */
-  .statusbar{
-    position:relative;z-index:30;flex:none;
-    padding:16px 30px 8px;
-    background:linear-gradient(180deg,rgba(20,12,4,.92),rgba(20,12,4,.55) 70%,transparent);
-    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  }
-  .statusbar .row{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ink);letter-spacing:.5px}
-  .sicons{display:flex;align-items:center;gap:6px;color:var(--gold)}
-  .sicons svg{display:block}
   /* 灵动岛 */
   .island{
     position:absolute;top:12px;left:50%;transform:translateX(-50%);
@@ -92,18 +82,14 @@
   .island::after{content:"";position:absolute;right:11px;top:50%;transform:translateY(-50%);width:9px;height:9px;border-radius:50%;
     background:radial-gradient(circle at 35% 35%,#1E2C46 0%,#060B16 60%);box-shadow:inset 0 0 2px rgba(90,140,255,.5)}
 
-  /* ================= 页面滚动区 ================= */
+  /* ================= 页面内容区（一屏展示，取消滚动） ================= */
   .page{
-    flex:1;overflow-y:auto;overscroll-behavior:contain;position:relative;z-index:5;
-    padding:10px 28px 30px;
+    flex:1;overflow:hidden;position:relative;z-index:5;
+    padding:23px 20px 24px;
   }
-  .page::-webkit-scrollbar{width:6px}
-  .page::-webkit-scrollbar-track{background:rgba(255,176,32,.05)}
-  .page::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#FFB020,#B45309);border-radius:99px;box-shadow:0 0 6px rgba(255,176,32,.55)}
-  .page::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#FFC95A,#D97706)}
 
   /* ================= Hero ================= */
-  .hero{padding-top:14px;text-align:center;animation:riseIn .8s .15s cubic-bezier(.22,1,.36,1) both;position:relative}
+  .hero{padding-top:10px;text-align:center;animation:riseIn .8s .15s cubic-bezier(.22,1,.36,1) both;position:relative}
   /* 背景大六边形线框 */
   .hero .hexbg{
     position:absolute;top:-30px;left:50%;transform:translateX(-50%);
@@ -120,14 +106,12 @@
   .eyebrow i{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 2.2s infinite}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
   h1{
-    margin-top:16px;font-size:33px;line-height:1.22;font-weight:800;letter-spacing:2px;
+    margin-top:10px;font-size:30px;line-height:1.22;font-weight:800;letter-spacing:2px;white-space:nowrap;
     background:linear-gradient(180deg,#FFE7B8 0%,#FFB020 46%,#D97706 100%);
     -webkit-background-clip:text;background-clip:text;color:transparent;
     filter:drop-shadow(0 0 18px rgba(255,176,32,.35));
   }
-  .sub{margin-top:12px;font-size:13px;color:var(--ink-dim);letter-spacing:2.5px}
-  .sub b{color:var(--green);font-weight:600}
-  .tags{margin-top:16px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+  .tags{margin-top:12px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
   .tag{
     font-size:10.5px;color:var(--ink-dim);letter-spacing:1px;padding:5px 11px;border-radius:8px;
     border:1px solid rgba(185,155,107,.28);background:rgba(185,155,107,.07);
@@ -137,18 +121,19 @@
 
   /* ================= 业务网格 ================= */
   .grid-title{
-    margin:30px 0 14px;display:flex;align-items:center;gap:10px;
+    margin:14px 0 10px;display:flex;align-items:center;gap:10px;
     font-size:12px;letter-spacing:2.5px;color:var(--ink-dim);
     animation:riseIn .8s .35s cubic-bezier(.22,1,.36,1) both;
   }
   .grid-title::before,.grid-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,176,32,.35))}
   .grid-title::after{background:linear-gradient(90deg,rgba(255,176,32,.35),transparent)}
   .grid{
-    display:grid;grid-template-columns:1fr 1fr;gap:12px;
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;
   }
   .card{
     position:relative;overflow:hidden;cursor:pointer;user-select:none;
-    padding:16px 14px 14px;border-radius:var(--radius);
+    display:flex;align-items:center;gap:9px;
+    padding:15px 11px;border-radius:14px;
     background:linear-gradient(160deg,rgba(255,176,32,.09),rgba(20,12,4,.4) 55%);
     border:1px solid rgba(255,176,32,.28);
     box-shadow:inset 0 1px 0 rgba(255,220,160,.12),0 8px 20px rgba(0,0,0,.35);
@@ -158,23 +143,29 @@
   .card:nth-child(1){animation-delay:.42s}.card:nth-child(2){animation-delay:.5s}
   .card:nth-child(3){animation-delay:.58s}.card:nth-child(4){animation-delay:.66s}
   .card:nth-child(5){animation-delay:.74s}.card:nth-child(6){animation-delay:.82s}
+  .card:nth-child(7){animation-delay:.9s}.card:nth-child(8){animation-delay:.98s}
+  .card:nth-child(9){animation-delay:1.06s}.card:nth-child(10){animation-delay:1.14s}
   @keyframes riseIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
   .card:active{transform:scale(.965)}
   .card:hover{border-color:rgba(255,176,32,.6);box-shadow:0 0 0 1px rgba(255,176,32,.25),0 10px 26px rgba(217,119,6,.22),inset 0 1px 0 rgba(255,220,160,.16);transform:translateY(-3px)}
   /* 深绿系卡片 */
   .card.green{background:linear-gradient(160deg,rgba(16,185,129,.09),rgba(6,32,24,.4) 55%);border-color:rgba(16,185,129,.3)}
   .card.green:hover{border-color:rgba(16,185,129,.62);box-shadow:0 0 0 1px rgba(16,185,129,.25),0 10px 26px rgba(6,95,70,.3),inset 0 1px 0 rgba(160,255,220,.12)}
+  /* 蓝色系卡片 */
+  .card.blue{background:linear-gradient(160deg,rgba(59,130,246,.1),rgba(8,20,40,.42) 55%);border-color:rgba(59,130,246,.38)}
+  .card.blue:hover{border-color:rgba(59,130,246,.68);box-shadow:0 0 0 1px rgba(59,130,246,.3),0 10px 26px rgba(29,78,216,.3),inset 0 1px 0 rgba(160,200,255,.14)}
   /* 点击脉冲光 */
   .card .pulse{position:absolute;inset:0;background:radial-gradient(120px circle at var(--px,50%) var(--py,50%),rgba(255,196,86,.28),transparent 70%);opacity:0;pointer-events:none;transition:opacity .5s}
   .card.flash .pulse{opacity:1;transition:opacity .06s}
   /* 涟漪 */
   .ripple{position:absolute;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,200,90,.5) 0%,rgba(255,200,90,0) 70%);transform:scale(0);animation:rip .6s ease-out forwards}
   .card.green .ripple{background:radial-gradient(circle,rgba(52,211,153,.5) 0%,rgba(52,211,153,0) 70%)}
+  .card.blue .ripple{background:radial-gradient(circle,rgba(96,165,250,.5) 0%,rgba(96,165,250,0) 70%)}
   @keyframes rip{to{transform:scale(2.6);opacity:0}}
 
-  .card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+  .card-info{flex:1;min-width:0}
   .icon-ring{
-    width:44px;height:44px;border-radius:13px;flex:none;
+    width:36px;height:36px;border-radius:11px;flex:none;
     display:flex;align-items:center;justify-content:center;color:var(--gold);
     background:linear-gradient(150deg,rgba(255,176,32,.2),rgba(217,119,6,.08));
     border:1px solid rgba(255,176,32,.4);
@@ -182,29 +173,232 @@
     animation:floaty 4.2s ease-in-out infinite;
   }
   .card.green .icon-ring{color:#34D399;background:linear-gradient(150deg,rgba(16,185,129,.2),rgba(6,95,70,.12));border-color:rgba(16,185,129,.45);box-shadow:0 0 12px rgba(16,185,129,.22),inset 0 0 8px rgba(16,185,129,.1)}
+  .card.blue .icon-ring{color:#60A5FA;background:linear-gradient(150deg,rgba(59,130,246,.22),rgba(29,78,216,.12));border-color:rgba(59,130,246,.5);box-shadow:0 0 12px rgba(59,130,246,.28),inset 0 0 8px rgba(59,130,246,.12)}
   .card:nth-child(odd) .icon-ring{animation-delay:.6s}
   @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-  .no{font-family:var(--mono);font-size:20px;font-weight:700;color:rgba(255,176,32,.22);letter-spacing:1px}
+  .no{display:none}
   .card.green .no{color:rgba(52,211,153,.25)}
-  .card h3{font-size:15.5px;font-weight:700;color:var(--ink);letter-spacing:.8px;margin-bottom:6px}
-  .card p{font-size:11px;line-height:1.55;color:var(--ink-dim);letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .card .bar{margin-top:11px;height:3px;border-radius:99px;background:rgba(255,176,32,.14);overflow:hidden}
-  .card.green .bar{background:rgba(16,185,129,.14)}
-  .card .bar i{display:block;height:100%;width:36%;border-radius:99px;background:linear-gradient(90deg,var(--gold-deep),var(--gold));box-shadow:0 0 6px rgba(255,176,32,.7)}
-  .card.green .bar i{background:linear-gradient(90deg,var(--green-deep),var(--green));box-shadow:0 0 6px rgba(16,185,129,.7)}
+  .card h3{font-size:12.5px;font-weight:700;color:var(--ink);letter-spacing:.3px;margin-bottom:3px;white-space:nowrap}
+  .card p{font-size:9.5px;line-height:1.5;color:var(--ink-dim);letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
   /* ================= CTA ================= */
-  .cta{margin:26px 2px 0;animation:riseIn .8s .9s cubic-bezier(.22,1,.36,1) both}
+  .cta{margin:26px 2px 0;animation:riseIn .8s .9s cubic-bezier(.22,1,.36,1) both;text-align:center}
   .cta button{
-    width:100%;padding:15px;border:none;border-radius:999px;cursor:pointer;
-    font-family:inherit;font-size:15px;font-weight:700;letter-spacing:3px;color:#1A0E02;
-    background:linear-gradient(135deg,#FFC95A 0%,#F97316 55%,#D97706 100%);
-    box-shadow:0 0 8px rgba(255,176,32,.55),0 0 22px rgba(249,115,22,.3),inset 0 1px 0 rgba(255,255,255,.45);
-    transition:transform .2s,box-shadow .25s;
+    display:block;margin:0 auto;width:min(320px,100%);padding:15px;border:1.5px solid rgba(255,176,32,.75);border-radius:999px;cursor:pointer;
+    font-family:inherit;font-size:15px;font-weight:700;letter-spacing:3px;color:#FFC95A;
+    background:rgba(10,6,2,.55);
+    box-shadow:0 0 10px rgba(255,176,32,.35),0 0 26px rgba(255,176,32,.16),inset 0 0 10px rgba(255,176,32,.08);
+    transition:transform .2s,box-shadow .25s,border-color .25s;
   }
-  .cta button:hover{box-shadow:0 0 12px rgba(255,176,32,.8),0 0 34px rgba(249,115,22,.42),inset 0 1px 0 rgba(255,255,255,.5);transform:translateY(-2px)}
+  .cta button:hover{border-color:rgba(255,201,90,.95);box-shadow:0 0 14px rgba(255,176,32,.6),0 0 38px rgba(255,176,32,.28),inset 0 0 14px rgba(255,176,32,.12);transform:translateY(-2px)}
   .cta button:active{transform:scale(.97)}
   footer{margin-top:18px;text-align:center;font-size:10px;letter-spacing:2px;color:rgba(185,155,107,.5);font-family:var(--mono)}
+
+  /* ================= 业务详情弹窗（占屏约90%） ================= */
+  .mask{
+    position:absolute;inset:0;z-index:80;border-radius:inherit;
+    background:rgba(5,3,1,.62);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    opacity:0;pointer-events:none;transition:opacity .3s;
+  }
+  .mask.show{opacity:1;pointer-events:auto}
+  .modal{
+    position:absolute;left:50%;top:50%;z-index:90;width:92%;height:86%;
+    transform:translate(-50%,-50%) translateY(28px) scale(.96);opacity:0;pointer-events:none;
+    border-radius:20px;overflow:hidden;display:flex;flex-direction:column;
+    background:linear-gradient(170deg,rgba(38,25,10,.97),rgba(15,9,4,.98));
+    border:1.5px solid rgba(255,176,32,.55);
+    box-shadow:0 0 22px rgba(255,176,32,.32),0 0 64px rgba(255,176,32,.13),0 30px 60px rgba(0,0,0,.65);
+    transition:opacity .3s,transform .36s cubic-bezier(.22,1,.36,1);
+  }
+  .modal.show{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+  /* 绿色系弹窗（绿色按钮触发） */
+  .modal.green{border-color:rgba(16,185,129,.6);box-shadow:0 0 22px rgba(16,185,129,.32),0 0 64px rgba(16,185,129,.13),0 30px 60px rgba(0,0,0,.65)}
+  .modal.green .m-head .en{color:#34D399}
+  .modal.green .m-sec{color:#34D399}
+  .modal.green .m-sec::after{background:linear-gradient(90deg,rgba(16,185,129,.35),transparent)}
+  .modal.green .m-close{border-color:rgba(16,185,129,.55);background:rgba(16,185,129,.1);color:#34D399}
+  .modal.green .m-close:hover{box-shadow:0 0 10px rgba(16,185,129,.5)}
+  .modal.green .m-btn{border-color:rgba(16,185,129,.75);color:#6EE7B7;box-shadow:0 0 10px rgba(16,185,129,.35),0 0 26px rgba(16,185,129,.16),inset 0 0 10px rgba(16,185,129,.08)}
+  .modal.green .m-btn:hover{border-color:rgba(110,231,183,.95);box-shadow:0 0 14px rgba(16,185,129,.6),0 0 38px rgba(16,185,129,.28),inset 0 0 14px rgba(16,185,129,.12)}
+  /* 蓝色系弹窗（蓝色按钮触发） */
+  .modal.blue{border-color:rgba(59,130,246,.62);box-shadow:0 0 22px rgba(59,130,246,.34),0 0 64px rgba(59,130,246,.14),0 30px 60px rgba(0,0,0,.65)}
+  .modal.blue .m-head .en{color:#60A5FA}
+  .modal.blue .m-sec{color:#60A5FA}
+  .modal.blue .m-sec::after{background:linear-gradient(90deg,rgba(59,130,246,.35),transparent)}
+  .modal.blue .m-close{border-color:rgba(59,130,246,.55);background:rgba(59,130,246,.1);color:#60A5FA}
+  .modal.blue .m-close:hover{box-shadow:0 0 10px rgba(59,130,246,.5)}
+  .modal.blue .m-btn{border-color:rgba(59,130,246,.8);color:#93C5FD;box-shadow:0 0 10px rgba(59,130,246,.38),0 0 26px rgba(59,130,246,.18),inset 0 0 10px rgba(59,130,246,.1)}
+  .modal.blue .m-btn:hover{border-color:rgba(147,197,253,.95);box-shadow:0 0 14px rgba(59,130,246,.62),0 0 38px rgba(59,130,246,.3),inset 0 0 14px rgba(59,130,246,.14)}
+  .m-close{
+    position:absolute;top:12px;right:12px;z-index:5;width:30px;height:30px;border-radius:50%;
+    border:1px solid rgba(255,176,32,.5);background:rgba(255,176,32,.1);color:var(--gold);
+    font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;
+    transition:transform .2s,box-shadow .2s;
+  }
+  .m-close:hover{box-shadow:0 0 10px rgba(255,176,32,.5);transform:rotate(90deg)}
+  .m-body{flex:1;overflow-y:auto;padding:24px 20px 22px}
+  .m-body::-webkit-scrollbar{width:5px}
+  .m-body::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#FFB020,#B45309);border-radius:99px}
+  .m-head{display:flex;align-items:center;gap:13px;margin-bottom:15px}
+  .m-icon{
+    width:52px;height:52px;border-radius:15px;flex:none;display:flex;align-items:center;justify-content:center;color:var(--gold);
+    background:linear-gradient(150deg,rgba(255,176,32,.22),rgba(217,119,6,.1));
+    border:1px solid rgba(255,176,32,.5);box-shadow:0 0 14px rgba(255,176,32,.28),inset 0 0 8px rgba(255,176,32,.12);
+  }
+  .m-icon.green{color:#34D399;background:linear-gradient(150deg,rgba(16,185,129,.22),rgba(6,95,70,.12));border-color:rgba(16,185,129,.55);box-shadow:0 0 14px rgba(16,185,129,.3),inset 0 0 8px rgba(16,185,129,.12)}
+  .m-icon.blue{color:#60A5FA;background:linear-gradient(150deg,rgba(59,130,246,.24),rgba(29,78,216,.14));border-color:rgba(59,130,246,.58);box-shadow:0 0 14px rgba(59,130,246,.32),inset 0 0 8px rgba(59,130,246,.14)}
+  .m-head h2{font-size:19px;font-weight:800;color:var(--ink);letter-spacing:1.5px}
+  .m-head .en{display:block;margin-top:3px;font-family:var(--mono);font-size:9.5px;letter-spacing:2.5px;color:var(--gold);opacity:.85}
+  .m-desc{font-size:12.5px;line-height:1.85;color:var(--ink-dim);letter-spacing:.3px;margin-bottom:18px}
+  .m-sec{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:2.5px;color:var(--gold);margin:0 0 11px}
+  .m-sec::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(255,176,32,.35),transparent)}
+  .m-feat{
+    display:flex;gap:10px;align-items:flex-start;padding:10px 12px;margin-bottom:8px;border-radius:11px;
+    border:1px solid rgba(255,176,32,.18);background:rgba(255,176,32,.05);
+  }
+  .m-feat svg{flex:none;margin-top:2px;color:var(--gold)}
+  .m-feat.green{border-color:rgba(16,185,129,.2);background:rgba(16,185,129,.05)}
+  .m-feat.green svg{color:#34D399}
+  .m-feat.blue{border-color:rgba(59,130,246,.22);background:rgba(59,130,246,.06)}
+  .m-feat.blue svg{color:#60A5FA}
+  .m-feat b{display:block;font-size:12.5px;color:var(--ink);letter-spacing:.5px;margin-bottom:2px}
+  .m-feat span{font-size:11px;line-height:1.55;color:var(--ink-dim)}
+  .m-contact{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:9px 12px;margin-bottom:7px;border-radius:10px;
+    border:1px solid rgba(255,176,32,.22);background:rgba(255,176,32,.06);
+    transition:all .2s;
+  }
+  .m-contact .k{font-size:10px;color:var(--ink-dim);letter-spacing:1px;margin-bottom:2px}
+  .m-contact .v{font-family:var(--mono);font-size:12.5px;color:#FFC95A;letter-spacing:.5px}
+  .m-contact.copied{border-color:rgba(16,185,129,.6);background:rgba(16,185,129,.08);box-shadow:0 0 10px rgba(16,185,129,.22)}
+  .m-contact.copied .k,.m-contact.copied .v{color:#6EE7B7}
+  .m-contact.copied .m-copy{color:#6EE7B7;border-color:rgba(16,185,129,.6);background:rgba(16,185,129,.12)}
+  /* TELTLK 注册/下载按钮 */
+  .tk-btn{display:block;text-align:center;text-decoration:none;padding:10px 0;border-radius:10px;font-size:12px;font-weight:700;letter-spacing:2px;color:#fff;margin-bottom:8px;cursor:pointer}
+  .tk-reg{background:linear-gradient(135deg,#2563EB,#3B82F6);box-shadow:0 0 14px rgba(59,130,246,.4)}
+  .tk-dl{background:linear-gradient(135deg,#059669,#10B981);box-shadow:0 0 14px rgba(16,185,129,.4)}
+  .m-copy{
+    flex:none;padding:7px 14px;border-radius:999px;cursor:pointer;font-size:11px;letter-spacing:1px;
+    border:1px solid rgba(255,176,32,.55);background:rgba(255,176,32,.1);color:var(--gold);transition:all .2s;
+  }
+  .m-copy:hover{background:rgba(255,176,32,.2);box-shadow:0 0 8px rgba(255,176,32,.4)}
+  .m-btn{
+    margin-top:18px;width:100%;padding:13px;border-radius:999px;cursor:pointer;
+    border:1.5px solid rgba(255,176,32,.75);background:rgba(10,6,2,.55);color:#FFC95A;
+    font-family:inherit;font-size:14px;font-weight:700;letter-spacing:2.5px;
+    box-shadow:0 0 10px rgba(255,176,32,.35),0 0 26px rgba(255,176,32,.16),inset 0 0 10px rgba(255,176,32,.08);
+    transition:all .25s;
+  }
+  .m-btn:hover{border-color:rgba(255,201,90,.95);box-shadow:0 0 14px rgba(255,176,32,.6),0 0 38px rgba(255,176,32,.28),inset 0 0 14px rgba(255,176,32,.12)}
+  .m-btn:active{transform:scale(.97)}
+  /* 次级按钮（收费标准查看 / 返回） */
+  .m-btn.sub{margin-top:6px;margin-bottom:2px;border-width:1px;box-shadow:none;background:transparent;opacity:.88}
+  /* 收费标准明细表（全边框细线，随主题变色） */
+  .price-tbl{width:100%;border-collapse:collapse;margin-top:2px;border:1px solid rgba(255,176,32,.3)}
+  .price-tbl th{font-size:10.5px;letter-spacing:1.5px;color:var(--gold);padding:7px 6px;border:1px solid rgba(255,176,32,.3);text-align:center;font-weight:700}
+  .price-tbl td{font-size:11px;color:var(--ink-dim);padding:6px 8px;border:1px solid rgba(255,176,32,.16);letter-spacing:.3px}
+  .price-tbl td:first-child{width:30px;text-align:center;font-family:var(--mono);color:var(--gold)}
+  .price-tbl td:nth-child(3){text-align:right;white-space:nowrap;color:#FFC95A;font-family:var(--mono)}
+  .price-tbl td:last-child{width:58px;font-size:9.5px;color:var(--gold);opacity:.85;white-space:nowrap}
+  .modal.green .price-tbl{border-color:rgba(16,185,129,.35)}
+  .modal.green .price-tbl th{color:#34D399;border-color:rgba(16,185,129,.35)}
+  .modal.green .price-tbl td{border-color:rgba(16,185,129,.18)}
+  .modal.green .price-tbl td:first-child{color:#34D399}
+  .modal.green .price-tbl td:nth-child(3){color:#6EE7B7}
+  .modal.blue .price-tbl{border-color:rgba(59,130,246,.35)}
+  .modal.blue .price-tbl th{color:#60A5FA;border-color:rgba(59,130,246,.35)}
+  .modal.blue .price-tbl td{border-color:rgba(59,130,246,.18)}
+  .modal.blue .price-tbl td:first-child{color:#60A5FA}
+  .modal.blue .price-tbl td:nth-child(3){color:#93C5FD}
+
+  /* 委托申请表单 */
+  .m-field{margin-bottom:12px}
+  .m-field label{display:block;font-size:11px;letter-spacing:2px;color:var(--gold);margin-bottom:6px}
+  .m-field input,.m-field textarea{
+    width:100%;padding:11px 12px;border-radius:10px;font-family:inherit;font-size:13px;letter-spacing:.5px;
+    color:var(--ink);background:rgba(10,6,2,.5);border:1px solid rgba(255,176,32,.3);outline:none;
+    transition:border-color .2s,box-shadow .2s;
+  }
+  .m-field input:focus,.m-field textarea:focus{border-color:rgba(255,176,32,.7);box-shadow:0 0 10px rgba(255,176,32,.22)}
+  .m-field textarea{min-height:84px;resize:vertical;line-height:1.6}
+  .m-field input::placeholder,.m-field textarea::placeholder{color:rgba(185,155,107,.45)}
+  .modal.green .m-field label{color:#34D399}
+  .modal.green .m-field input,.modal.green .m-field textarea{border-color:rgba(16,185,129,.3)}
+  .modal.green .m-field input:focus,.modal.green .m-field textarea:focus{border-color:rgba(16,185,129,.7);box-shadow:0 0 10px rgba(16,185,129,.22)}
+  .modal.blue .m-field label{color:#60A5FA}
+  .modal.blue .m-field input,.modal.blue .m-field textarea{border-color:rgba(59,130,246,.3)}
+  .modal.blue .m-field input:focus,.modal.blue .m-field textarea:focus{border-color:rgba(59,130,246,.7);box-shadow:0 0 10px rgba(59,130,246,.22)}
+  /* 需求选择器（一行三个单选） */
+  .m-sel{width:100%;display:flex;align-items:center;justify-content:space-between;padding:11px 12px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:13px;letter-spacing:.5px;color:var(--ink);background:rgba(10,6,2,.5);border:1px solid rgba(255,176,32,.3);transition:border-color .2s}
+  .m-sel:hover{border-color:rgba(255,176,32,.6)}
+  .m-sel .arr{color:var(--gold);font-size:12px}
+  .m-pick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+  .m-pick{padding:10px 2px;border-radius:9px;cursor:pointer;font-family:inherit;font-size:11px;letter-spacing:.3px;text-align:center;color:var(--ink-dim);background:rgba(255,176,32,.04);border:1px solid rgba(255,176,32,.22);transition:all .18s}
+  .m-pick.on{color:#FFC95A;border-color:rgba(255,176,32,.75);background:rgba(255,176,32,.12);box-shadow:0 0 10px rgba(255,176,32,.3)}
+  .modal.green .m-sel{border-color:rgba(16,185,129,.3)}.modal.green .m-sel:hover{border-color:rgba(16,185,129,.6)}.modal.green .m-sel .arr{color:#34D399}
+  .modal.green .m-pick{background:rgba(16,185,129,.04);border-color:rgba(16,185,129,.22)}
+  .modal.green .m-pick.on{color:#6EE7B7;border-color:rgba(16,185,129,.75);background:rgba(16,185,129,.12);box-shadow:0 0 10px rgba(16,185,129,.3)}
+  .modal.blue .m-sel{border-color:rgba(59,130,246,.3)}.modal.blue .m-sel:hover{border-color:rgba(59,130,246,.6)}.modal.blue .m-sel .arr{color:#60A5FA}
+  .modal.blue .m-pick{background:rgba(59,130,246,.04);border-color:rgba(59,130,246,.22)}
+  .modal.blue .m-pick.on{color:#93C5FD;border-color:rgba(59,130,246,.75);background:rgba(59,130,246,.12);box-shadow:0 0 10px rgba(59,130,246,.3)}
+  /* 提交成功页 */
+  .ok-wrap{text-align:center;padding:22px 4px 4px}
+  .ok-ring{width:74px;height:74px;margin:0 auto 16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px;color:#FFC95A;border:2px solid rgba(255,176,32,.7);box-shadow:0 0 18px rgba(255,176,32,.4),inset 0 0 12px rgba(255,176,32,.15);animation:okPop .5s cubic-bezier(.22,1.4,.36,1) both}
+  @keyframes okPop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+  .ok-wrap h2{font-size:19px;font-weight:800;letter-spacing:3px;color:var(--ink);margin-bottom:8px}
+  .ok-wrap>p{font-size:12px;line-height:1.8;color:var(--ink-dim)}
+  .ok-info{margin:16px 0 4px;text-align:left;border:1px solid rgba(255,176,32,.22);border-radius:11px;padding:8px 14px}
+  .ok-info div{display:flex;justify-content:space-between;gap:12px;font-size:11.5px;padding:5px 0;color:var(--ink-dim);letter-spacing:.5px}
+  .ok-info div b{color:#FFC95A;font-weight:600;white-space:nowrap}
+  .modal.green .ok-ring{color:#6EE7B7;border-color:rgba(16,185,129,.7);box-shadow:0 0 18px rgba(16,185,129,.4),inset 0 0 12px rgba(16,185,129,.15)}
+  .modal.green .ok-info{border-color:rgba(16,185,129,.22)}
+  .modal.green .ok-info div b{color:#6EE7B7}
+  .modal.blue .ok-ring{color:#93C5FD;border-color:rgba(59,130,246,.7);box-shadow:0 0 18px rgba(59,130,246,.4),inset 0 0 12px rgba(59,130,246,.15)}
+  .modal.blue .ok-info{border-color:rgba(59,130,246,.22)}
+  .modal.blue .ok-info div b{color:#93C5FD}
+  /* 付款页 收款码占位 */
+  .m-qr-row{display:flex;gap:10px;margin:4px 0 14px}
+  .m-qr{flex:1;aspect-ratio:1/1.05;border:1px dashed rgba(255,176,32,.4);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;background:rgba(0,0,0,.3);color:rgba(255,201,90,.7)}
+  .m-qr span{font-size:10px;letter-spacing:1px;color:var(--ink-dim)}
+  .m-qr b{font-size:11px;letter-spacing:1px;color:#FFC95A}
+  .m-paynote{margin-top:10px;text-align:center;font-size:10.5px;letter-spacing:1px;color:var(--ink-dim)}
+  .modal.green .m-qr{border-color:rgba(16,185,129,.4);color:rgba(110,231,183,.7)}
+  .modal.green .m-qr b{color:#6EE7B7}
+  .modal.blue .m-qr{border-color:rgba(59,130,246,.4);color:rgba(147,197,253,.7)}
+  .modal.blue .m-qr b{color:#93C5FD}
+  /* 付款页紧凑化：一屏显示全部 */
+  .pay-box .m-head{margin-bottom:12px}
+  .pay-box .m-head .m-icon{width:40px;height:40px}
+  .pay-box .m-head h2{font-size:17px}
+  .pay-box .m-desc{font-size:11px!important;line-height:1.6;margin-bottom:10px!important}
+  .pay-box .m-item{padding:6px 10px;margin-bottom:6px;border-radius:10px;background:rgba(0,0,0,.55)}
+  .pay-box .m-item .ic{width:24px;height:24px;font-size:10px;color:#fff;border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.08)}
+  .pay-box .m-item .tx{gap:2px}
+  .pay-box .m-item .row1{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .pay-box .m-item .tx .lb{font-size:11px;color:#fff;letter-spacing:.5px}
+  .pay-box .m-item .tx .vl{font-size:10px;color:rgba(255,255,255,.75)}
+  .pay-box .m-copy{padding:4px 10px;font-size:10px;color:#fff;border-color:rgba(255,255,255,.45);background:rgba(255,255,255,.06)}
+  .pay-box .m-item.copied{border-color:rgba(16,185,129,.65);background:rgba(16,185,129,.1);box-shadow:0 0 12px rgba(16,185,129,.25)}
+  .pay-box .m-item.copied .lb,.pay-box .m-item.copied .vl{color:#6EE7B7}
+  .pay-box .m-item.copied .m-copy{color:#6EE7B7;border-color:rgba(16,185,129,.6);background:rgba(16,185,129,.12)}
+  .pay-box .m-qr-row{gap:8px;margin:2px 0 10px}
+  .pay-box .m-qr{aspect-ratio:1/.72;gap:4px;border-radius:10px}
+  .pay-box .m-qr svg{width:24px;height:24px}
+  .pay-box .m-qr b{font-size:10.5px}
+  .pay-box .m-qr span{font-size:9px}
+  .pay-box .m-btn{padding:10px 0 11px;font-size:13px}
+  .pay-box .m-paynote{margin-top:8px;font-size:10px}
+  .pay-box .m-head .fee{font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--gold)}
+  .modal.green .m-head .fee{color:#6EE7B7}
+  .modal.blue .m-head .fee{color:#93C5FD}
+  .m-pick em{display:block;font-style:normal;font-size:9px;margin-top:3px;color:var(--ink-dim);letter-spacing:0}
+  .m-pick.on em{color:inherit;opacity:.85}
+  /* 收费表分页 */
+  .pager{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0 2px}
+  .pager .pg{flex:1;padding:8px 0;font-size:11px;margin:0;border-radius:9px}
+  .pager .pg:disabled{opacity:.35;cursor:default;pointer-events:none}
+  .pg-info{font-size:11px;color:var(--ink-dim);font-family:var(--mono);flex:none;letter-spacing:1px}
 
   /* toast 提示 */
   .toast{
@@ -212,7 +406,7 @@
     padding:10px 22px;border-radius:99px;font-size:12.5px;letter-spacing:1px;color:#FFE7B8;
     background:rgba(28,18,6,.9);border:1px solid rgba(255,176,32,.5);
     box-shadow:0 0 18px rgba(255,176,32,.35),0 12px 30px rgba(0,0,0,.5);
-    backdrop-filter:blur(10px);opacity:0;pointer-events:none;z-index:60;
+    backdrop-filter:blur(10px);opacity:0;pointer-events:none;z-index:120;
     transition:opacity .3s,transform .3s cubic-bezier(.22,1,.36,1);white-space:nowrap;
   }
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -224,7 +418,6 @@
     .key,.port,.hole{display:none}
     .screen{border-radius:0}
     .island{display:none}
-    .statusbar{padding-top:calc(env(safe-area-inset-top,0px) + 12px)}
   }
 </style>
 </head>
@@ -234,21 +427,6 @@
   <span class="key power"></span><span class="key vol-up"></span><span class="key vol-dn"></span>
   <div class="screen">
     <div class="island"></div>
-
-    <!-- 状态栏 -->
-    <div class="statusbar">
-      <div class="row">
-        <span id="clock">--:--</span>
-        <div class="sicons">
-          <!-- 信号 -->
-          <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
-          <!-- WiFi -->
-          <svg width="15" height="11" viewBox="0 0 15 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 3.6a10 10 0 0 1 13 0"/><path d="M3.4 6.2a6.6 6.6 0 0 1 8.2 0"/><path d="M5.8 8.8a3.2 3.2 0 0 1 3.4 0"/></svg>
-          <!-- 电池 -->
-          <svg width="24" height="12" viewBox="0 0 24 12"><rect x=".5" y=".5" width="20" height="11" rx="3.2" fill="none" stroke="currentColor" opacity=".5"/><rect x="2" y="2" width="14" height="8" rx="1.8" fill="currentColor"/><path d="M22 4v4a2.2 2.2 0 0 0 0-4Z" fill="currentColor" opacity=".5"/></svg>
-        </div>
-      </div>
-    </div>
 
     <!-- 可上下滑动内容区 -->
     <div class="page">
@@ -261,12 +439,10 @@
           <path d="M50 32 66 41v18l-16 9-16-9V41Z"/>
         </svg>
         <span class="eyebrow"><i></i>CHAIN · ECOSYSTEM</span>
-        <h1>区块链生态<br>社区业务</h1>
-        <p class="sub">一条链 · 六大业务 · <b>共建共赢</b></p>
+        <h1>区块链生态业务</h1>
         <div class="tags">
-          <span class="tag hot">主网运行中</span>
-          <span class="tag ok">节点招募开放</span>
-          <span class="tag">社区自治</span>
+          <span class="tag hot">八大业务</span>
+          <span class="tag ok">社区自治</span>
         </div>
       </header>
 
@@ -274,82 +450,124 @@
       <div class="grid-title">核心业务版图</div>
       <main class="grid" id="grid">
 
-        <div class="card" data-note="523.25" data-msg="AI代码开发 · 业务通道已开启">
+        <div class="card" data-note="523.25" data-msg="基础操作业务 · 服务已就绪">
           <span class="pulse"></span>
-          <div class="card-top">
-            <div class="icon-ring">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5"/><path d="m16 7 5 5-5 5"/><path d="m13.5 4-3 16"/></svg>
-            </div>
-            <span class="no">01</span>
+          <div class="icon-ring">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H5a2 2 0 0 1 0-4h13v4"/><path d="M4 5v13a2 2 0 0 0 2 2h14V7"/><path d="M15 13h2"/></svg>
           </div>
-          <h3>AI代码开发</h3>
-          <p>智能合约 · DApp 定制开发</p>
-          <div class="bar"><i style="width:46%"></i></div>
+          <div class="card-info">
+            <h3>基础操作业务</h3>
+            <p>钱包 · 转账 · 链上操作</p>
+          </div>
+          <span class="no">01</span>
         </div>
 
-        <div class="card" data-note="587.33" data-msg="AI动漫开发 · 业务通道已开启">
+        <div class="card" data-note="587.33" data-msg="加密货币购买 · 代买代售服务">
           <span class="pulse"></span>
-          <div class="card-top">
-            <div class="icon-ring">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3.2"/></svg>
-            </div>
-            <span class="no">02</span>
+          <div class="icon-ring">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 7.5h4a2 2 0 0 1 0 4h-4zM9.5 11.5h4.6a2 2 0 0 1 0 4H9.5zM10.5 6v1.5M10.5 15.5V17M13 6v1.5M13 15.5V17"/></svg>
           </div>
-          <h3>AI动漫开发</h3>
-          <p>AI 驱动动漫内容生产</p>
-          <div class="bar"><i style="width:52%"></i></div>
+          <div class="card-info">
+            <h3>加密货币购买</h3>
+            <p>代买代售 · 一站式服务</p>
+          </div>
+          <span class="no">02</span>
         </div>
 
-        <div class="card" data-note="659.25" data-msg="加密货币代购 · 代买代售服务">
+        <div class="card green" data-note="659.25" data-msg="节点搭建 · 部署通道已开启">
           <span class="pulse"></span>
-          <div class="card-top">
-            <div class="icon-ring">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 7.5h4a2 2 0 0 1 0 4h-4zM9.5 11.5h4.6a2 2 0 0 1 0 4H9.5zM10.5 6v1.5M10.5 15.5V17M13 6v1.5M13 15.5V17"/></svg>
-            </div>
-            <span class="no">03</span>
+          <div class="icon-ring">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 21 7v10l-9 5-9-5V7Z"/><circle cx="12" cy="12" r="2.6"/><path d="M12 2v7.4M12 14.6V22M3 7l6.5 3.5M14.5 13.5 21 17M21 7l-6.5 3.5M9.5 13.5 3 17"/></svg>
           </div>
-          <h3>加密货币代购</h3>
-          <p>代买代售 · 一站式服务</p>
-          <div class="bar"><i style="width:64%"></i></div>
+          <div class="card-info">
+            <h3>节点搭建</h3>
+            <p>主网节点部署与运维</p>
+          </div>
+          <span class="no">03</span>
         </div>
 
-        <div class="card" data-note="698.46" data-msg="其他基础操作 · 服务已就绪">
+        <div class="card green" data-note="698.46" data-msg="生态宣发 · 推广通道已开启">
           <span class="pulse"></span>
-          <div class="card-top">
-            <div class="icon-ring">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H5a2 2 0 0 1 0-4h13v4"/><path d="M4 5v13a2 2 0 0 0 2 2h14V7"/><path d="M15 13h2"/></svg>
-            </div>
-            <span class="no">04</span>
+          <div class="icon-ring">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4a1 1 0 0 0 1 1h3l6 4V5L7 9H4a1 1 0 0 0-1 1Z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
           </div>
-          <h3>其他基础操作</h3>
-          <p>钱包 · 转账 · 链上操作</p>
-          <div class="bar"><i style="width:58%"></i></div>
+          <div class="card-info">
+            <h3>生态宣发</h3>
+            <p>社区推广 · 品牌传播</p>
+          </div>
+          <span class="no">04</span>
         </div>
 
-        <div class="card green" data-note="783.99" data-msg="节点搭建 · 部署通道已开启">
+        <div class="card green" data-note="783.99" data-msg="AI代码开发 · 业务通道已开启">
           <span class="pulse"></span>
-          <div class="card-top">
-            <div class="icon-ring">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 21 7v10l-9 5-9-5V7Z"/><circle cx="12" cy="12" r="2.6"/><path d="M12 2v7.4M12 14.6V22M3 7l6.5 3.5M14.5 13.5 21 17M21 7l-6.5 3.5M9.5 13.5 3 17"/></svg>
-            </div>
-            <span class="no">05</span>
+          <div class="icon-ring">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5"/><path d="m16 7 5 5-5 5"/><path d="m13.5 4-3 16"/></svg>
           </div>
-          <h3>节点搭建</h3>
-          <p>主网节点部署与运维</p>
-          <div class="bar"><i style="width:72%"></i></div>
+          <div class="card-info">
+            <h3>AI代码开发</h3>
+            <p>智能合约 · DApp 定制开发</p>
+          </div>
+          <span class="no">05</span>
         </div>
 
-        <div class="card green" data-note="880" data-msg="生态宣发 · 推广通道已开启">
+        <div class="card green" data-note="880" data-msg="AI漫剧开发 · 业务通道已开启">
           <span class="pulse"></span>
-          <div class="card-top">
-            <div class="icon-ring">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4a1 1 0 0 0 1 1h3l6 4V5L7 9H4a1 1 0 0 0-1 1Z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
-            </div>
-            <span class="no">06</span>
+          <div class="icon-ring">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3.2"/></svg>
           </div>
-          <h3>生态宣发</h3>
-          <p>社区推广 · 品牌传播</p>
-          <div class="bar"><i style="width:80%"></i></div>
+          <div class="card-info">
+            <h3>AI漫剧开发</h3>
+            <p>AI 驱动漫剧内容生产</p>
+          </div>
+          <span class="no">06</span>
+        </div>
+
+        <div class="card blue" data-note="1046.5" data-msg="维权委托 · 服务已就绪">
+          <span class="pulse"></span>
+          <div class="icon-ring">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5Z"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>
+          </div>
+          <div class="card-info">
+            <h3>维权委托</h3>
+            <p>证据固定 · 专业维权</p>
+          </div>
+          <span class="no">07</span>
+        </div>
+
+        <div class="card blue" data-note="1174.66" data-msg="3D建模 · 业务通道已开启">
+          <span class="pulse"></span>
+          <div class="icon-ring">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 21 7v10l-9 5-9-5V7Z"/><path d="m3 7 9 5 9-5"/><path d="M12 12v10"/></svg>
+          </div>
+          <div class="card-info">
+            <h3>3D建模</h3>
+            <p>模型定制 · 还原场景</p>
+          </div>
+          <span class="no">08</span>
+        </div>
+
+        <div class="card blue" data-note="1318.51" data-msg="抖音小游戏 · 业务通道已开启">
+          <span class="pulse"></span>
+          <div class="icon-ring">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h4M8 9v4"/><circle cx="16" cy="10" r="1"/><circle cx="18" cy="13" r="1"/><path d="M17.3 5H6.7a4 4 0 0 0-3.9 3.1L2 12.5A3.5 3.5 0 0 0 5.5 17c.8 0 1.5-.3 2-.8l1-1.2h7l1 1.2c.5.5 1.2.8 2 .8a3.5 3.5 0 0 0 3.5-4.5l-.8-4.4A4 4 0 0 0 17.3 5Z"/></svg>
+          </div>
+          <div class="card-info">
+            <h3>抖音小游戏</h3>
+            <p>小游戏开发 · 广告变现</p>
+          </div>
+          <span class="no">09</span>
+        </div>
+
+        <div class="card blue" data-note="1567.98" data-msg="存币生息 · 服务已就绪">
+          <span class="pulse"></span>
+          <div class="icon-ring">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+          </div>
+          <div class="card-info">
+            <h3>存币生息</h3>
+            <p>稳健增值 · 按日计息</p>
+          </div>
+          <span class="no">10</span>
         </div>
 
       </main>
@@ -362,19 +580,18 @@
     </div>
 
     <div class="toast" id="toast"></div>
+
+    <!-- 业务详情弹窗 -->
+    <div class="mask" id="mask"></div>
+    <div class="modal" id="modal">
+      <button class="m-close" id="mClose">×</button>
+      <div class="m-body" id="mBody"></div>
+    </div>
     <div class="port"></div><span class="hole l"></span><span class="hole r"></span>
   </div>
 </div>
 
 <script>
-  /* ===== 状态栏真实时间 ===== */
-  const clock = document.getElementById('clock');
-  function tick(){
-    const d = new Date();
-    clock.textContent = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
-  }
-  tick(); setInterval(tick, 15000);
-
   /* ===== 音效：每张卡片独立音高（五声音阶） ===== */
   let actx = null;
   function playNote(freq){
@@ -407,8 +624,8 @@
     toastTimer = setTimeout(()=>toast.classList.remove('show'), 1800);
   }
 
-  /* ===== 卡片交互：涟漪 + 脉冲 + 音效 + 提示 ===== */
-  document.querySelectorAll('.card').forEach(card=>{
+  /* ===== 卡片交互：涟漪 + 脉冲 + 音效 ===== */
+  document.querySelectorAll('.card').forEach((card, idx)=>{
     card.addEventListener('pointerdown', e=>{
       const r = card.getBoundingClientRect();
       const x = e.clientX - r.left, y = e.clientY - r.top;
@@ -427,13 +644,460 @@
     });
     card.addEventListener('pointerup', ()=>card.classList.remove('flash'));
     card.addEventListener('pointerleave', ()=>card.classList.remove('flash'));
-    card.addEventListener('click', ()=>showToast(card.dataset.msg));
+    card.addEventListener('click', ()=>openBiz(idx));
   });
+
+  /* ===== 业务详情弹窗 ===== */
+  const BIZ = [
+    {t:'基础操作业务', en:'BASIC · OPS', green:false,
+     icon:'<path d="M20 7H5a2 2 0 0 1 0-4h13v4"/><path d="M4 5v13a2 2 0 0 0 2 2h14V7"/><path d="M15 13h2"/>',
+     d:'面向新手与进阶用户的链上基础操作指导，手把手教学，让钱包和转账像网银一样简单。',
+     f:[['钱包创建与备份','助记词规范保管，防盗防丢全流程指导'],
+        ['转账与收款教学','Gas 设置、地址校验、到账确认逐项演示'],
+        ['跨链桥操作','主流跨链桥使用教学与风险提示'],
+        ['链上数据查询','浏览器查账、合约验证、交易溯源']]},
+    {t:'加密货币购买', en:'CRYPTO · OTC', green:false,
+     icon:'<circle cx="12" cy="12" r="9"/><path d="M9.5 7.5h4a2 2 0 0 1 0 4h-4zM9.5 11.5h4.6a2 2 0 0 1 0 4H9.5zM10.5 6v1.5M10.5 15.5V17M13 6v1.5M13 15.5V17"/>',
+     d:'合规通道下的代买代售一站式服务，实时汇率报价，资金全程可追溯，交割安全高效。',
+     f:[['代买代售','主流币种一键下单，专人跟进全程代办'],
+        ['实时报价','聚合多家深度，汇率透明无隐藏费用'],
+        ['大宗撮合','大额订单专属通道，分批交割降低滑点'],
+        ['安全交割','多重校验 + 链上凭证，笔笔可查']]},
+    {t:'节点搭建', en:'NODE · DEPLOY', green:true,
+     icon:'<path d="M12 2 21 7v10l-9 5-9-5V7Z"/><circle cx="12" cy="12" r="2.6"/><path d="M12 2v7.4M12 14.6V22M3 7l6.5 3.5M14.5 13.5 21 17M21 7l-6.5 3.5M9.5 13.5 3 17"/>',
+     d:'主网节点从部署到运维的全托管服务，专业机房与监控体系保障节点稳定在线、收益最大化。',
+     f:[['主网节点部署','硬件选型、系统配置、节点同步一站完成'],
+        ['运维监控','7×24 状态监控，异常自动告警与处置'],
+        ['收益优化','出块策略调优，在线率与收益双提升'],
+        ['托管服务','机房托管可选，断电断网无忧']]},
+    {t:'生态宣发', en:'ECO · GROWTH', green:true,
+     icon:'<path d="M3 10v4a1 1 0 0 0 1 1h3l6 4V5L7 9H4a1 1 0 0 0-1 1Z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/>',
+     d:'围绕社区增长的全案宣发服务，内容、渠道、活动三线并行，让优质项目被更多人看见。',
+     f:[['社区冷启动','社群搭建、规则设计、核心成员招募'],
+        ['内容矩阵','图文、短视频、AMA 多形态内容输出'],
+        ['KOL 合作','垂直领域达人联动，精准触达目标用户'],
+        ['活动策划','空投、AMA、线上线下活动全案执行']]},
+    {t:'AI代码开发', en:'AI · CODE DEV', green:true,
+     icon:'<path d="m8 7-5 5 5 5"/><path d="m16 7 5 5-5 5"/><path d="m13.5 4-3 16"/>',
+     d:'从需求梳理到主网上线的一站式开发服务，覆盖合约、前端与链上工具，源码全量交付，安全规范贯穿始终。',
+     f:[['智能合约开发','Solidity / Rust 编写，代币、NFT、DeFi 合约按需定制'],
+        ['DApp 全栈开发','前端界面 + 合约交互 + 数据索引一体化交付'],
+        ['链上工具定制','批量转账、快照空投、数据看板等效率工具'],
+        ['交付保障','源码 + 部署文档 + 操作教程，支持二次开发']]},
+    {t:'AI漫剧开发', en:'AI · COMIC DRAMA', green:true,
+     icon:'<path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3.2"/>',
+     d:'以 AI 管线驱动漫剧内容批量生产，从角色到成片大幅缩短制作周期，支持 IP 链上衍生开发。',
+     f:[['角色与世界观设定','AI 辅助生成角色立绘、设定集与视觉风格统一'],
+        ['剧本与分镜','AI 生成剧本初稿与分镜脚本，人工精修把控质量'],
+        ['批量出图 / 成片','漫剧剧集、海报、短剧片段规模化产出'],
+        ['IP 链上衍生','角色 NFT、数字藏品发行与社区共创']]},
+    {t:'维权委托', en:'RIGHTS · SAFEGUARD', blue:true,
+     icon:'<path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5Z"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/>',
+     d:'针对各类项目纠纷与权益受损场景，提供从证据固定到追回进展的全流程维权委托服务，专业团队全程跟进。',
+     f:[['证据收集固定','聊天记录、转账凭证、链上数据整理归档'],
+        ['维权方案定制','案情分析评估，制定协商、投诉、法律多路径方案'],
+        ['律师资源对接','合作律所专业支持，必要时协助立案'],
+        ['进度实时跟进','关键节点主动同步，维权进展透明可查']]},
+    {t:'3D建模', en:'3D · MODELING', blue:true,
+     icon:'<path d="M12 2 21 7v10l-9 5-9-5V7Z"/><path d="m3 7 9 5 9-5"/><path d="M12 12v10"/>',
+     d:'提供高精度 3D 建模与数字资产制作服务，覆盖角色、场景到链游道具，支持 NFT 化与多平台格式交付。',
+     f:[['角色 / 场景建模','风格化或写实均可，高模低模按需制作'],
+        ['数字资产制作','可铸造为 NFT 的 3D 藏品与链上道具'],
+        ['链游模型定制','适配主流引擎，含骨骼绑定与动画'],
+        ['渲染与交付','多格式导出，附源文件与使用授权']]},
+    {t:'抖音小游戏', en:'DOUYIN · MINI GAME', blue:true,
+     icon:'<path d="M6 11h4M8 9v4"/><circle cx="16" cy="10" r="1"/><circle cx="18" cy="13" r="1"/><path d="M17.3 5H6.7a4 4 0 0 0-3.9 3.1L2 12.5A3.5 3.5 0 0 0 5.5 17c.8 0 1.5-.3 2-.8l1-1.2h7l1 1.2c.5.5 1.2.8 2 .8a3.5 3.5 0 0 0 3.5-4.5l-.8-4.4A4 4 0 0 0 17.3 5Z"/>',
+     d:'抖音小游戏从玩法策划到上线运营的全案开发服务，深度对接抖音开放平台，内置广告变现体系，让创意快速落地为收益。',
+     f:[['玩法策划开发','休闲、益智、合成等热门玩法快速定制'],
+        ['平台能力接入','登录、分享裂变、排行榜等 SDK 全套接入'],
+        ['广告变现','激励视频 + 插屏广告植入，收益模型调优'],
+        ['上线运营','过审指导、流量投放与数据分析陪跑']]},
+    {t:'存币生息', en:'EARN · INTEREST', blue:true,
+     icon:'<path d="m3 17 6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
+     d:'数字资产稳健增值服务，活期定期灵活选择，收益链上可查、按日计息，多重安全机制守护每一份资产。',
+     f:[['活期生息','随存随取灵活申赎，持有即按日计息'],
+        ['定期理财','多档锁仓周期可选，年化收益更优'],
+        ['收益透明','每日收益明细链上可查，复利自动滚存'],
+        ['安全保障','多签托管 + 风险准备金，资产多重防护']]}
+  ];
+
+  const mask  = document.getElementById('mask');
+  const modal = document.getElementById('modal');
+  const mBody = document.getElementById('mBody');
+  const CHECK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5Z"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>';
+
+  function openModal(html, theme){
+    mBody.innerHTML = html;
+    mBody.scrollTop = 0;
+    modal.classList.remove('green', 'blue');
+    if (theme) modal.classList.add(theme);
+    mask.classList.add('show');
+    modal.classList.add('show');
+  }
+  function closeModal(){
+    mask.classList.remove('show');
+    modal.classList.remove('show');
+  }
+  mask.addEventListener('click', ()=>{ playNote(392); closeModal(); });
+  document.getElementById('mClose').addEventListener('click', ()=>{ playNote(392); closeModal(); });
+
+  function openBiz(i){
+    const b = BIZ[i];
+    const theme = b.green ? 'green' : (b.blue ? 'blue' : '');
+    const cls = theme ? ' ' + theme : '';
+    openModal(`
+      <div class="m-head">
+        <div class="m-icon${cls}">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${b.icon}</svg>
+        </div>
+        <div><h2>${b.t}</h2><span class="en">${b.en}</span></div>
+      </div>
+      <p class="m-desc">${b.d}</p>
+      <div class="m-sec">服务内容</div>
+      ${b.f.map(x=>`
+        <div class="m-feat${cls}">${CHECK}<div><b>${x[0]}</b><span>${x[1]}</span></div></div>`).join('')}
+      <button class="m-btn sub" onclick="openPrice(${i})">收费标准查看</button>
+      <button class="m-btn" onclick="openApply(${i})">立即咨询该业务</button>
+    `, theme);
+  }
+
+  /* ===== 各业务收费明细（序号 / 服务名称 / 服务价格 / 备注） ===== */
+  const PRICE_TABLES = [
+    /* 01 基础操作业务 */
+    [['Pi APP 下载安装代办','20元'],['账号注册全套代办','200元'],['手机号短信验证代办','30元'],
+     ['基础个人资料填写代办','15元'],['邮箱绑定代办','2元'],['邮箱接收验证+认证代办','2元'],
+     ['首次挖矿启动操作','10元'],['设置每日挖矿定时提醒','5元'],['添加安全圈成员代办','25元'],
+     ['安全圈加满5人操作','40元'],['Pi 浏览器下载安装','15元'],['KYC 资格名额申请代办','50元'],
+     ['KYC 证件资料录入代办','300元'],['KYC 人脸活体检测代办','120元'],['KYC 居住地址材料提交','80元'],
+     ['KYC 人工审核进度跟进','90元'],['KYC 驳回申诉代办','160元'],['KYC 审核结果确认核验','30元'],
+     ['Pi 钱包创建申请代办','70元'],['钱包独立密码设置操作','20元'],['钱包助记词备份指导代办','40元'],
+     ['助记词校验确认操作','25元'],['钱包绑定Pi挖矿主账号','60元'],['账号2FA双重安全验证开启','75元'],
+     ['Pi 资产锁仓比例设置代办','85元'],['每日挖矿收益资产核对','35元'],['主网迁移资格清单检查','55元'],
+     ['挖矿资产迁移入主网钱包','120元'],['钱包小额转账测试操作','95元'],['全套9绿状态检测验收','100元']],
+    /* 02 加密货币购买 */
+    [['免费咨询代币价格','免费'],['免费咨询代币情况','免费'],['购买出售加密货币 <1000美元','收取5%'],
+     ['购买出售加密货币 <3000美元','收取3%'],['购买出售加密货币 <5000美元','收取2%'],['找回助记词、私钥','300元'],
+     ['找回交易所账号','200元'],['加密资产划转过户到其他地址','100元']],
+    /* 03 节点搭建 */
+    [['高配节点部署','7500元'],['顶配节点配置','8500元'],['场地费','150元'],
+     ['维护费（每月会员价）','50元/月','原价80元'],['单次部署节点','600元/次'],['节点单次维修','50元/次'],
+     ['租赁高配节点','450元/月'],['租赁顶配节点','550元/月']],
+    /* 04 生态宣发 */
+    [['社群搭建','500元/个'],['社区代运营','1500元/月'],['文案策划','300元/篇'],
+     ['海报设计','200元/张'],['短视频制作','800元/条'],['KOL合作对接','1000元起'],
+     ['AMA活动策划','1500元/场'],['空投活动执行','2000元起'],['媒体通稿发布','600元/篇']],
+    /* 05 AI代码开发 */
+    [['需求分析评估','免费'],['代币合约开发','3000元起'],['NFT合约开发','4000元起'],
+     ['DeFi合约开发','8000元起'],['DApp前端开发','5000元起'],['数据看板开发','3000元起'],
+     ['批量工具脚本','1500元/个'],['合约部署上架','500元/次'],['二次开发维护','2000元/月']],
+    /* 06 AI漫剧开发 */
+    [['角色设定','500元/个'],['世界观设定','800元/套'],['剧本创作','1000元/集'],
+     ['分镜脚本','600元/集'],['漫剧成片制作','2000元/集'],['海报物料制作','300元/张'],
+     ['短剧剪辑成片','800元/条'],['IP衍生NFT设计','1500元起']],
+    /* 07 维权委托 */
+    [['案情分析评估','免费'],['证据整理固定','500元起'],['维权方案定制','800元/套'],
+     ['律师函代发','1000元/份'],['律师资源对接','1500元起'],['立案材料准备','2000元起'],
+     ['进度跟进服务','500元/月'],['链上数据取证','1000元/次']],
+    /* 08 3D建模 */
+    [['角色建模（低模）','800元/个'],['角色建模（高模）','2000元/个'],['场景建模','1500元起'],
+     ['道具建模','500元/个'],['骨骼绑定','600元/套'],['动画制作','1000元/条'],
+     ['渲染出图','200元/张'],['NFT 3D藏品','1200元起'],['模型修改调整','300元/次']],
+    /* 09 抖音小游戏 */
+    [['玩法策划方案','2000元/套'],['休闲小游戏开发','5000元/款'],['中度游戏开发','12000元起'],
+     ['平台SDK接入','1500元/套'],['广告组件接入','1000元/套'],['过审辅导','3000元起'],
+     ['上线部署','800元/次'],['运营数据分析','1000元/月']],
+    /* 10 存币生息 */
+    [['活期生息开通','免费'],['定期理财配置','免费'],['大额专属方案','免费'],
+     ['收益结算服务','收益分成10%'],['提前赎回协助','免费'],['资产配置咨询','免费'],
+     ['收益报告定制','200元/份'],['专属客户经理','免费']]
+  ];
+
+  function openPrice(i, page){
+    const b = BIZ[i];
+    const theme = b.green ? 'green' : (b.blue ? 'blue' : '');
+    const cls = theme ? ' ' + theme : '';
+    const per = 10;
+    const total = PRICE_TABLES[i].length;
+    const pages = Math.ceil(total / per);
+    if (page == null) page = 0;
+    page = Math.max(0, Math.min(page, pages - 1));
+    const rows = PRICE_TABLES[i].slice(page * per, page * per + per).map((r, n)=>`
+      <tr><td>${page * per + n + 1}</td><td>${r[0]}</td><td>${r[1]}</td><td>${r[2] || ''}</td></tr>`).join('');
+    const pager = pages > 1 ? `
+      <div class="pager">
+        <button class="m-btn sub pg" ${page===0?'disabled':''} onclick="openPrice(${i},${page-1})">上一页</button>
+        <span class="pg-info">${page+1} / ${pages}</span>
+        <button class="m-btn sub pg" ${page===pages-1?'disabled':''} onclick="openPrice(${i},${page+1})">下一页</button>
+      </div>` : '';
+    openModal(`
+      <div class="m-head">
+        <div class="m-icon${cls}">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 7.5 12 11.5l3.5-4M12 11.5V17M9.5 13h5M9.5 15h5"/></svg>
+        </div>
+        <div><h2>收费标准明细表</h2><span class="en">PRICING · ${b.en}</span></div>
+      </div>
+      <p class="m-desc" style="margin-bottom:10px">${b.t} · 共 ${total} 项收费明细，最终报价以实际评估为准。</p>
+      <table class="price-tbl">
+        <tr><th>序号</th><th>服务名称</th><th>服务价格</th><th>备注</th></tr>
+        ${rows}
+      </table>
+      ${pager}
+      <button class="m-btn sub" onclick="openBiz(${i})">返回业务详情</button>
+      <button class="m-btn" onclick="openApply(${i})">立即咨询该业务</button>
+    `, theme);
+  }
+
+  let draft = null, pickSel = -1;
+
+  /* 用户输入回显转义，防止引号/尖括号破坏表单结构 */
+  function esc(s){
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function openApply(i, pick){
+    const b = BIZ[i];
+    const theme = b.green ? 'green' : (b.blue ? 'blue' : '');
+    const cls = theme ? ' ' + theme : '';
+    if (pick == null) pick = -1;
+    const d = draft || {name:'', phone:'', note:''};
+    const pickLabel = pick >= 0 ? PRICE_TABLES[i][pick][0] + '　' + PRICE_TABLES[i][pick][1] : '请选择您的需求';
+    openModal(`
+      <div class="m-head">
+        <div class="m-icon${cls}">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        </div>
+        <div><h2>申请委托</h2><span class="en">APPLY · ${b.en}</span></div>
+      </div>
+      <p class="m-desc" style="margin-bottom:14px">委托业务：${b.t} · 填写以下信息提交后，管家将尽快与您联系。</p>
+      <div class="m-field"><label>请点击下面按钮，选择您的需求</label>
+        <button type="button" class="m-sel" onclick="openPick(${i},${pick})"><span>${pickLabel}</span><span class="arr">▾</span></button>
+      </div>
+      <div class="m-field"><label>您的姓名</label><input id="apName" type="text" placeholder="请输入姓名" maxlength="20" value="${esc(d.name)}"></div>
+      <div class="m-field"><label>手机号</label><input id="apPhone" type="tel" placeholder="请输入手机号" maxlength="11" value="${esc(d.phone)}"></div>
+      <div class="m-field"><label>注明来意（备注）</label><textarea id="apNote" placeholder="请简要说明您的需求…">${esc(d.note)}</textarea></div>
+      <button class="m-btn" onclick="submitApply(${i},${pick})">确定 · 申请委托</button>
+      <button class="m-btn sub" onclick="openBiz(${i});draft=null">返回 · 取消委托</button>
+    `, theme);
+  }
+
+  function openPick(i, pick){
+    draft = {
+      name:  (document.getElementById('apName').value  || '').trim(),
+      phone: (document.getElementById('apPhone').value || '').trim(),
+      note:  (document.getElementById('apNote').value  || '').trim()
+    };
+    pickSel = pick;
+    const b = BIZ[i];
+    const theme = b.green ? 'green' : (b.blue ? 'blue' : '');
+    const cls = theme ? ' ' + theme : '';
+    const items = PRICE_TABLES[i].map((r, n)=>`<button type="button" class="m-pick${n===pick?' on':''}" data-n="${n}" onclick="pickSet(${n})">${r[0]}<em>${r[1]}</em></button>`).join('');
+    openModal(`
+      <div class="m-head">
+        <div class="m-icon${cls}">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/></svg>
+        </div>
+        <div><h2>选择您的需求</h2><span class="en">SELECT · ${b.en}</span></div>
+      </div>
+      <p class="m-desc" style="margin-bottom:12px">${b.t} · 单击选择需求项目，确定后返回表单。</p>
+      <div class="m-pick-grid">${items}</div>
+      <button class="m-btn" onclick="openApply(${i},pickSel)">确定</button>
+      <button class="m-btn sub" onclick="openApply(${i},${pick})">取消</button>
+    `, theme);
+  }
+
+  function pickSet(n){
+    pickSel = n;
+    document.querySelectorAll('.m-pick').forEach(el=>el.classList.toggle('on', +el.dataset.n === n));
+    playNote(880);
+  }
+
+  function submitApply(i, pick){
+    const name  = (document.getElementById('apName').value  || '').trim();
+    const phone = (document.getElementById('apPhone').value || '').trim();
+    const note  = (document.getElementById('apNote').value  || '').trim();
+    if (pick < 0){ showToast('请先选择您的需求'); playNote(392); return; }
+    if (!name){ showToast('请填写您的姓名'); playNote(392); return; }
+    if (!/^1\d{10}$/.test(phone)){ showToast('请填写正确的手机号'); playNote(392); return; }
+    playNote(1046.5);
+    draft = null;
+    payCtx = { i, pick, name, phone, note };
+    const biz = BIZ[i].t, svc = PRICE_TABLES[i][pick][0], fee = PRICE_TABLES[i][pick][1];
+    showToast('正在提交委托…');
+    /* FormSubmit 推送第①封：正在接单 */
+    sendOrderMail('正在接单', {
+      '委托业务': biz, '需求项目': svc, '此次费用': fee,
+      '姓名': name, '手机号': phone, '来意备注': note || '无',
+      '付款状态': '待付款（客户已提交委托）'
+    }).then(res=>{
+      showToast(res && res.success ? '委托已发送至管家邮箱' : '邮件暂未送达，请检查网络或完成邮箱激活');
+    });
+    openPay();
+  }
+
+  let payCtx = null;
+
+  /* FormSubmit 邮件推送：1844187773@qq.com（表格模板，免验证码） */
+  function sendOrderMail(subject, fields){
+    const payload = Object.assign({ _subject: subject, _template: 'table', _captcha: 'false' }, fields);
+    return fetch('https://formsubmit.co/ajax/1844187773@qq.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(r=>r.json()).catch(()=>null);
+  }
+
+  function openPay(){
+    const { i, pick, name } = payCtx;
+    const b = BIZ[i];
+    const svc = PRICE_TABLES[i][pick][0];
+    const fee = PRICE_TABLES[i][pick][1];
+    const theme = b.green ? 'green' : (b.blue ? 'blue' : '');
+    const cls = theme ? ' ' + theme : '';
+    const payItem = (label, val, sub, copy)=>`
+      <div class="m-item">
+        <div class="tx">
+          <div class="row1"><span class="lb">${label}　${val}</span><button class="m-copy" onclick="copyPay(this,'${copy}')">复制</button></div>
+          <span class="vl">${sub}</span>
+        </div>
+      </div>`;
+    const qrIcon = `<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM18 18h3v3h-3zM21 14v.01M14 21v.01"/></svg>`;
+    openModal(`
+      <div class="pay-box">
+      <div class="m-head">
+        <div class="m-icon${cls}">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
+        </div>
+        <div><h2>付款方式 <span class="fee">（此次费用：${fee}）</span></h2><span class="en">PAYMENT · ${b.en}</span></div>
+      </div>
+      <p class="m-desc" style="margin-bottom:12px">${name} 您好，您委托的「${b.t} · ${svc}」，请按照以下任意方式完成支付，然后再点确认委托即可。</p>
+      ${payItem('支付宝 ①','15536455536','昵称：天空之城','15536455536')}
+      ${payItem('支付宝 ②','1844187773','昵称：令移阁','1844187773')}
+      ${payItem('中国银行','6217 8581 0000 5536','户主：魏国炳','6217858100005536')}
+      ${payItem('建设银行','6217 0015 5364 5553','户主：魏国炳','6217001553645553')}
+      ${payItem('微　信','15536455536','昵称：天空之城','15536455536')}
+      <div class="m-qr-row">
+        <div class="m-qr">${qrIcon}<b>支付宝收款码</b><span>（待上传）</span></div>
+        <div class="m-qr">${qrIcon}<b>微信收款码</b><span>（待上传）</span></div>
+      </div>
+      <button class="m-btn" onclick="confirmPay()">（已付款）确认委托</button>
+      <p class="m-paynote">若此业务未完成，已付款项将原路退回。</p>
+      </div>
+    `, theme);
+  }
+
+  function confirmPay(){
+    const { i, pick, name, phone, note } = payCtx;
+    const biz = BIZ[i].t;
+    const svc = PRICE_TABLES[i][pick][0];
+    const fee = PRICE_TABLES[i][pick][1];
+    const theme = BIZ[i].green ? 'green' : (BIZ[i].blue ? 'blue' : '');
+    playNote(1046.5); playNote(1318.51);
+    /* FormSubmit 推送第②封：对方已付款 */
+    sendOrderMail('对方已付款', {
+      '委托业务': biz, '需求项目': svc, '此次费用': fee,
+      '姓名': name, '手机号': phone, '来意备注': note || '无',
+      '付款状态': '对方已付款 ✓（请管家核对账目并对接服务）'
+    }).then(res=>{
+      if (res && res.success) showToast('已付款确认已发送至管家邮箱');
+    });
+    openModal(`
+      <div class="ok-wrap">
+        <div class="ok-ring">✓</div>
+        <h2>提交成功</h2>
+        <p>付款确认已推送至管家邮箱<br>管家核对后将尽快与您对接服务，请保持手机畅通</p>
+        <div class="ok-info">
+          <div><span>您的姓名</span><b>${name}</b></div>
+          <div><span>手机号</span><b>${phone}</b></div>
+          <div><span>需求项目</span><b>${biz} · ${svc}</b></div>
+          <div><span>此次费用</span><b>${fee}</b></div>
+        </div>
+        <button class="m-btn" onclick="playNote(880);closeModal()">完成</button>
+      </div>
+    `, theme);
+  }
+
+  function openJoin(){
+    playNote(880);
+    openModal(`
+      <div class="m-head">
+        <div class="m-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13a8 8 0 0 1 16 0"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/><path d="M20 19a3 3 0 0 1-3 3h-3"/></svg>
+        </div>
+        <div><h2>随时咨询</h2><span class="en">CONSULT · ANYTIME</span></div>
+      </div>
+      <p class="m-desc">遇到疑问请随时咨询下方生态管理者，我们将尽快为您响应咨询服务。</p>
+      <div class="m-sec">联系方式</div>
+      <div class="m-contact">
+        <div><div class="k">生态管家 · 魏国炳</div><div class="v">15536455536</div></div>
+        <a class="m-copy" href="tel:15536455536" style="text-decoration:none" onclick="playNote(1046.5)">拨打</a>
+      </div>
+      <div class="m-contact">
+        <div><div class="k">微信 · 天空之城</div><div class="v">15536455536</div></div>
+        <button class="m-copy" onclick="copyJoin(this,'15536455536')">复制</button>
+      </div>
+      <div class="m-contact">
+        <div><div class="k">QQ群主 · 令移阁</div><div class="v">1844187773</div></div>
+        <button class="m-copy" onclick="copyJoin(this,'1844187773')">复制</button>
+      </div>
+      <div class="m-contact">
+        <div><div class="k">TELTLK 群聊</div><div class="v">正在创建中</div></div>
+        <button class="m-copy" onclick="copyJoin(this,'TELTLK群正在创建中')">复制</button>
+      </div>
+      <button class="m-btn sub" style="margin-top:8px;padding:7px 0;font-size:10.5px;letter-spacing:1px;border-radius:8px" onclick="toggleTeltlk()">没有 TELTLK 怎么办？</button>
+      <div id="teltlkBox" style="display:none;margin-top:8px">
+        <a class="tk-btn tk-reg" href="https://www.teltlk.com/func/#/register?invite=sss444" target="_blank" onclick="playNote(1046.5)">注册 TELTLK</a>
+        <a class="tk-btn tk-dl" href="https://www.teltlk.com/zh/" target="_blank" onclick="playNote(1174.66)">下载 TELTLK</a>
+      </div>
+      <p class="m-desc" style="margin-top:12px;margin-bottom:0;font-size:11px">若有疑问可提前随时联系生态管理者</p>
+    `);
+  }
+
+  function toggleTeltlk(){
+    playNote(880);
+    const box = document.getElementById('teltlkBox');
+    if (box) box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  }
+
+  function copyJoin(btn, t){
+    copyText(t);
+    document.querySelectorAll('.m-contact.copied').forEach(el=>el.classList.remove('copied'));
+    const row = btn.closest('.m-contact');
+    if (row) row.classList.add('copied');
+  }
+
+  function copyText(t){
+    playNote(1318.51);
+    const done = ()=>showToast('已复制：' + t);
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(done).catch(()=>fallbackCopy(t, done));
+    }else{
+      fallbackCopy(t, done);
+    }
+  }
+  /* file:// 等非安全环境下的复制降级方案 */
+  function fallbackCopy(t, done){
+    try{
+      const ta = document.createElement('textarea');
+      ta.value = t;
+      ta.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      done();
+    }catch(e){ showToast('复制失败，请手动输入'); }
+  }
+
+  function copyPay(btn, t){
+    copyText(t);
+    document.querySelectorAll('.m-item.copied').forEach(el=>el.classList.remove('copied'));
+    const item = btn.closest('.m-item');
+    if (item) item.classList.add('copied');
+  }
 
   /* ===== CTA 按钮 ===== */
   document.getElementById('joinBtn').addEventListener('click', ()=>{
-    playNote(1046.5);
-    showToast('已收到申请 · 社区管家将尽快联系你');
+    openJoin();
   });
 </script>
 </body>
